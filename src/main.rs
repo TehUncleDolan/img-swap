@@ -125,11 +125,14 @@ fn main() -> Result<()> {
     for book in env::args().skip(1) {
         println!("Renaming page in {book}...");
 
-        env::set_current_dir(&book).with_context(|| format!("failed to move into {book}"))?;
+        env::set_current_dir(&book)
+            .with_context(|| format!("failed to move into {book}"))?;
 
-        rename_pages().with_context(|| format!("failed to rename pages in {book}"))?;
+        rename_pages()
+            .with_context(|| format!("failed to rename pages in {book}"))?;
 
-        env::set_current_dir(&wd).context("failed to go back to the working directory")?;
+        env::set_current_dir(&wd)
+            .context("failed to go back to the working directory")?;
     }
 
     Ok(())
@@ -160,8 +163,14 @@ fn rename_pages() -> Result<()> {
     pages.sort_unstable();
 
     for pair in pages.chunks_exact(2) {
-        let new_page1 = PathBuf::from(format!("{}.bak", pair[0].to_str().expect("valid UTF-8")));
-        let new_page2 = PathBuf::from(format!("{}.bak", pair[1].to_str().expect("valid UTF-8")));
+        let new_page1 = PathBuf::from(format!(
+            "{}.bak",
+            pair[0].to_str().expect("valid UTF-8")
+        ));
+        let new_page2 = PathBuf::from(format!(
+            "{}.bak",
+            pair[1].to_str().expect("valid UTF-8")
+        ));
         // Rename using suffix to avoir overwrite.
         rename(&pair[0], &new_page2)?;
         rename(&pair[1], &new_page1)?;
@@ -174,13 +183,13 @@ fn rename_pages() -> Result<()> {
 }
 
 fn get_extension_from_filename(filename: &Path) -> Result<&str> {
-    filename
-        .extension()
-        .and_then(OsStr::to_str)
-        .ok_or_else(|| anyhow!("cannot get file extension for {}", filename.display()))
+    filename.extension().and_then(OsStr::to_str).ok_or_else(|| {
+        anyhow!("cannot get file extension for {}", filename.display())
+    })
 }
 
 fn rename(from: &Path, to: &Path) -> Result<()> {
-    fs::rename(from, to)
-        .with_context(|| format!("failed to rename {} to {}", from.display(), to.display()))
+    fs::rename(from, to).with_context(|| {
+        format!("failed to rename {} to {}", from.display(), to.display())
+    })
 }
