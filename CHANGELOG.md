@@ -12,7 +12,6 @@ Possible sections are:
 - `Security` in case of vulnerabilities.
 
 <!-- next-header -->
-
 ## [Unreleased] - ReleaseDate
 
 ### Added
