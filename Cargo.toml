@@ -1,0 +1,20 @@
+[package]
+name = "img-swap"
+version = "0.1.0-alpha.0"
+description = "CLI tool to swap image names"
+authors = ["Teh Uncle Dolan"]
+license = "BSD-3-Clause"
+edition = "2021"
+readme = "README.md"
+publish = false
+
+[package.metadata.release]
+pre-release-commit-message = "release {{version}}"
+pre-release-replacements = [
+  {file="CHANGELOG.md", search="Unreleased", replace="{{version}}", min=1},
+  {file="CHANGELOG.md", search="ReleaseDate", replace="{{date}}", min=1},
+  {file="CHANGELOG.md", search="<!-- next-header -->", replace="<!-- next-header -->\n## [Unreleased] - ReleaseDate\n", exactly=1},
+]
+
+[dependencies]
+anyhow = "1.0"
