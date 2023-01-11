@@ -1,6 +1,6 @@
 [package]
 name = "img-swap"
-version = "0.1.0-alpha.0"
+version = "0.1.0"
 description = "CLI tool to swap image names"
 authors = ["Teh Uncle Dolan"]
 license = "BSD-3-Clause"
