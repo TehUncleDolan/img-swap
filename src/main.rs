@@ -131,6 +131,7 @@ fn main() -> Result<()> {
         rename_pages()
             .with_context(|| format!("failed to rename pages in {book}"))?;
 
+        #[allow(clippy::needless_borrow)] // false positive.
         env::set_current_dir(&wd)
             .context("failed to go back to the working directory")?;
     }
